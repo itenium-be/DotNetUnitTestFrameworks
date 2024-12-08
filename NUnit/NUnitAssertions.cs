@@ -1,4 +1,6 @@
 using System.Collections;
+using InternalsOld;
+using InternalsTest;
 using NUnit.Framework;
 
 namespace NUnitTests;
@@ -138,5 +140,19 @@ public class NUnitAssertions
     public void SoftAssertions()
     {
         // Assert.Multiple();
+    }
+
+    [Test]
+    public void Internals()
+    {
+        bool result = InternalsImpl.DoIt();
+        Assert.That(result, Is.True);
+    }
+
+    [Test]
+    public void InternalsOld()
+    {
+        bool result = InternalsOldImpl.DoIt();
+        Assert.That(result, Is.True);
     }
 }

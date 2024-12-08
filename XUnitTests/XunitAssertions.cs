@@ -1,5 +1,7 @@
+using InternalsTest;
 using System.Collections;
 using System.Data;
+using InternalsOld;
 using Xunit;
 
 namespace XUnitTests;
@@ -82,5 +84,19 @@ public class XunitAssertions
     {
         int actual = 42;
         Assert.InRange(actual, 0, 100);
+    }
+
+    [Fact]
+    public void Internals()
+    {
+        bool result = InternalsImpl.DoIt();
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void InternalsOld()
+    {
+        bool result = InternalsOldImpl.DoIt();
+        Assert.True(result);
     }
 }

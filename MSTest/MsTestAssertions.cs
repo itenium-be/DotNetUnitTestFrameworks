@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Text.RegularExpressions;
+using InternalsOld;
+using InternalsTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MSTest;
@@ -81,5 +83,19 @@ public class MsTestAssertions
     {
         int actual = 42;
         Assert.IsTrue(actual < 100);
+    }
+
+    [TestMethod]
+    public void Internals()
+    {
+        bool result = InternalsImpl.DoIt();
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public void InternalsOld()
+    {
+        bool result = InternalsOldImpl.DoIt();
+        Assert.IsTrue(result);
     }
 }

@@ -18,4 +18,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InternalsOld\InternalsOld.csproj" />
+    <ProjectReference Include="..\InternalsTest\InternalsTest.csproj" />
+  </ItemGroup>
+
 </Project>
