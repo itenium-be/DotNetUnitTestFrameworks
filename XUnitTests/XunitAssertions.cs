@@ -116,4 +116,13 @@ public class XunitAssertions
         bool result = InternalsOldImpl.DoIt();
         Assert.True(result);
     }
+
+    [Fact]
+    public void SoftAssertions()
+    {
+        Assert.Multiple(
+            () => Assert.NotEqual(12, 24),
+            () => Assert.NotNull("Hello world")
+        );
+    }
 }

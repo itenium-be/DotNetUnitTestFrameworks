@@ -153,12 +153,6 @@ public class NUnitAssertions
     }
 
     [Test]
-    public void SoftAssertions()
-    {
-        // Assert.Multiple();
-    }
-
-    [Test]
     public void Internals()
     {
         bool result = InternalsImpl.DoIt();
@@ -170,5 +164,25 @@ public class NUnitAssertions
     {
         bool result = InternalsOldImpl.DoIt();
         Assert.That(result, Is.True);
+    }
+
+    [Test]
+    public void SoftAssertionsOld()
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(12, Is.Not.EqualTo(24));
+            Assert.That("Hello world", Is.Not.Null);
+        });
+    }
+
+    [Test]
+    public void SoftAssertionsNew()
+    {
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(12, Is.Not.EqualTo(24));
+            Assert.That("Hello world", Is.Not.Null);
+        }
     }
 }
