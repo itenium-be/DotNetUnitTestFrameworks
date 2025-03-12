@@ -1,6 +1,5 @@
 using InternalsTest;
 using System.Collections;
-using System.Data;
 using InternalsOld;
 using Xunit;
 
@@ -16,18 +15,20 @@ public class XunitAssertions
         Assert.NotEqual(false, actual);
         Assert.NotNull(actual);
         Assert.True(actual);
-        Assert.False(!actual);
+
+        actual = false;
+        Assert.False(actual);
     }
 
     [Fact]
     public void Strings()
     {
-        string actual = "";
+        const string actual = "";
         Assert.Same("", actual); // same reference
         Assert.Empty(actual);
         Assert.DoesNotContain("needle", actual);
 
-        string phrase = "Hello World!";
+        const string phrase = "Hello World!";
         Assert.Contains("!", phrase);
         Assert.EndsWith("!", phrase);
         Assert.StartsWith("hello", phrase, StringComparison.CurrentCultureIgnoreCase);
@@ -35,25 +36,31 @@ public class XunitAssertions
     }
 
     [Fact]
-    public void Exceptions()
+    public async Task Exceptions()
     {
         Action sut = () => throw new Exception("cause");
         var ex = Assert.Throws<Exception>(sut);
         Assert.Equal("cause", ex.Message);
 
         Func<Task> asyncSut = () => throw new Exception("cause");
-        var ex2 = Assert.ThrowsAsync<Exception>(() => asyncSut());
-        Assert.Equal("cause", ex2.Result.Message);
+        var ex2 = await Assert.ThrowsAsync<Exception>(() => asyncSut());
+        Assert.Equal("cause", ex2.Message);
 
         // Assert.ThrowsAny: Also accept derived Exceptions
     }
 
+    private class DerivedArrayList : ArrayList { }
+
     [Fact]
     public void Types()
     {
-        ICollection collection = new ArrayList();
+        ICollection collection = new DerivedArrayList();
+
         Assert.IsAssignableFrom(typeof(ArrayList), collection);
-        Assert.IsType(typeof(ArrayList), collection);
+
+        Assert.IsType(typeof(DerivedArrayList), collection);
+        Assert.IsType<DerivedArrayList>(collection);
+
         Assert.IsNotAssignableFrom<string>(collection);
         Assert.IsNotType<string>(collection);
     }
@@ -73,16 +80,16 @@ public class XunitAssertions
 
         Assert.Collection(
             actual,
-            itm => Assert.True(itm == 3),
-            itm => Assert.True(itm == 2),
-            itm => Assert.True(itm == 1)
+            itm => Assert.Equal(3, itm),
+            itm => Assert.Equal(2, itm),
+            itm => Assert.Equal(1, itm)
         );
     }
 
     [Fact]
     public void Numbers()
     {
-        int actual = 42;
+        const int actual = 42;
         Assert.InRange(actual, 0, 100);
     }
 
