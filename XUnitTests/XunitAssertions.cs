@@ -67,6 +67,7 @@ public class XunitAssertions
         ICollection collection = new DerivedArrayList();
 
         Assert.IsAssignableFrom(typeof(ArrayList), collection);
+        Assert.IsType<ArrayList>(collection, false);
 
         Assert.IsType(typeof(DerivedArrayList), collection);
         Assert.IsType<DerivedArrayList>(collection);
