@@ -97,7 +97,10 @@ public class MsTestAssertions
     {
         var expected = new[] { 1, 2, 3 };
         var actual = new[] { 3, 2, 1 };
-        CollectionAssert.AreEquivalent(expected, actual);
+        CollectionAssert.AreEquivalent(expected, actual); // Optional IEqualityComparer
+        Assert.HasCount(3, actual);
+        Assert.IsNotEmpty(actual);
+
         // CollectionAssert.AreEqual
         // CollectionAssert.DoesNotContain / Contains
         // CollectionAssert.IsSubsetOf();
@@ -105,6 +108,8 @@ public class MsTestAssertions
         // CollectionAssert.AllItemsAreInstancesOfType();
         // CollectionAssert.AllItemsAreNotNull();
         // CollectionAssert.AllItemsAreUnique();
+
+        Assert.ContainsSingle([1]);
     }
 
     [TestMethod]
