@@ -7,7 +7,7 @@ namespace MSTest;
 public class MSTest
 {
     [ClassInitialize]
-    public void BeforeAllTests() { }
+    public static void BeforeAllTests(TestContext context) { }
 
     [TestInitialize]
     public void BeforeEachTest() { }
@@ -29,11 +29,14 @@ public class MSTest
     }
 
     [TestMethod]
-    public void Test3() { }
+    public void Test3()
+    {
+        Assert.AreEqual(0, 0);
+    }
 
     [TestCleanup]
     public void AfterEachTest() { }
 
-    [ClassCleanup]
-    public void AfterAllTests() { }
+    [ClassCleanup(ClassCleanupBehavior.EndOfClass)]
+    public static void AfterAllTests() { }
 }
