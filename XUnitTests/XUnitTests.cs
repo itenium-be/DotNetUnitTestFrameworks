@@ -2,6 +2,7 @@ using Xunit;
 
 namespace XUnitTests;
 
+[Trait("Category", "xUnit Framework")]
 public class XUnitTests : IDisposable
 {
     public XUnitTests()

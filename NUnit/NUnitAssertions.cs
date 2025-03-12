@@ -17,6 +17,9 @@ public class NUnitAssertions
         Assert.That(actual, Is.True);
         Assert.That(!actual, Is.False);
 
+        actual = null;
+        Assert.That(actual, Is.Default);
+
         // Is.AnyOf()
     }
 
@@ -81,6 +84,7 @@ public class NUnitAssertions
         Assert.That(actual, Is.Not.Empty);
         Assert.That(actual, Has.Some.EqualTo(1));
         Assert.That(actual, Contains.Item(1)); // Has.Member(1), Does.Contain(1)
+        Assert.That(new List<int> {1, 2, 3}, Has.Count.EqualTo(3));
 
         Assert.That(actual, Is.Ordered.Descending);
         // Is.Ordered.By("fieldName").Then.Descending.By("otherField")
@@ -184,5 +188,13 @@ public class NUnitAssertions
             Assert.That(12, Is.Not.EqualTo(24));
             Assert.That("Hello world", Is.Not.Null);
         }
+    }
+
+    [Test]
+    public void SoftAssertionsNewBlock()
+    {
+        using var _ = Assert.EnterMultipleScope();
+        Assert.That(12, Is.Not.EqualTo(24));
+        Assert.That("Hello world", Is.Not.Null);
     }
 }
