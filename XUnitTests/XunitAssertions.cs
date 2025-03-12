@@ -36,17 +36,27 @@ public class XunitAssertions
     }
 
     [Fact]
-    public async Task Exceptions()
+    public async Task ExceptionsExact()
     {
-        Action sut = () => throw new Exception("cause");
-        var ex = Assert.Throws<Exception>(sut);
+        Action sut = () => throw new ArgumentException("cause");
+        var ex = Assert.Throws<ArgumentException>(sut);
         Assert.Equal("cause", ex.Message);
 
-        Func<Task> asyncSut = () => throw new Exception("cause");
-        var ex2 = await Assert.ThrowsAsync<Exception>(() => asyncSut());
+        Func<Task> asyncSut = () => throw new ArgumentException("cause");
+        var ex2 = await Assert.ThrowsAsync<ArgumentException>(() => asyncSut());
         Assert.Equal("cause", ex2.Message);
+    }
 
-        // Assert.ThrowsAny: Also accept derived Exceptions
+    [Fact]
+    public async Task ExceptionsDerived()
+    {
+        Action sut = () => throw new ArgumentException("cause");
+        var ex = Assert.ThrowsAny<Exception>(sut);
+        Assert.IsType<ArgumentException>(ex);
+
+        Func<Task> asyncSut = () => throw new ArgumentException("cause");
+        var ex2 = await Assert.ThrowsAnyAsync<Exception>(asyncSut);
+        Assert.IsType<ArgumentException>(ex2);
     }
 
     private class DerivedArrayList : ArrayList { }

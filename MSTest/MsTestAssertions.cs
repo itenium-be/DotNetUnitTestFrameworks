@@ -17,41 +17,70 @@ public class MsTestAssertions
         Assert.AreNotEqual(false, actual);
         Assert.IsNotNull(actual);
         Assert.IsTrue(actual);
-        Assert.IsFalse(!actual);
+
+        actual = false;
+        Assert.IsFalse(actual);
     }
 
     [TestMethod]
     public void Strings()
     {
-        string actual = "";
+        const string actual = "";
         Assert.AreSame("", actual);
 
-        // MSTest does not have a DoesNotContain?
-        StringAssert.DoesNotMatch(actual, new Regex("needle"));
-
-        string phrase = "Hello World!";
+        const string phrase = "Hello World!";
         StringAssert.Contains(phrase, "World");
+        Assert.Contains("World", phrase);
+        // Assert.DoesNotContain("needle", phrase); // Causes StackOverflow???
+
         StringAssert.StartsWith(phrase, "Hello");
         StringAssert.EndsWith(phrase, "world!", StringComparison.InvariantCultureIgnoreCase);
         StringAssert.Matches(phrase, new Regex("Hello.*"));
+        StringAssert.DoesNotMatch(actual, new Regex("needle"));
     }
 
     [TestMethod]
     [ExpectedException(typeof(Exception))]
-    public void Exceptions()
+    public void ExceptionsDeprecated()
     {
         Action sut = () => throw new Exception();
         sut();
     }
 
     [TestMethod]
-    public void ExceptionsAlt()
+    public async Task ExceptionsAlsoDeprecated()
     {
-        Action sut = () => throw new Exception();
-        Assert.ThrowsException<Exception>(sut);
+        Action sut = () => throw new ArgumentException("cause");
+        var oldSyntax = Assert.ThrowsException<ArgumentException>(sut);
+        Assert.AreEqual("cause", oldSyntax.Message);
 
-        Func<Task> asyncSut = () => throw new Exception();
-        Assert.ThrowsExceptionAsync<Exception>(asyncSut);
+        Func<Task> asyncSut = () => throw new ArgumentException("cause");
+        var oldSyntax2 = await Assert.ThrowsExceptionAsync<ArgumentException>(asyncSut);
+        Assert.AreEqual("cause", oldSyntax2.Message);
+    }
+
+    [TestMethod]
+    public async Task ExceptionsExact()
+    {
+        Action sut = () => throw new ArgumentException("cause");
+        var newSyntax = Assert.ThrowsExactly<ArgumentException>(sut);
+        Assert.AreEqual("cause", newSyntax.Message);
+
+        Func<Task> asyncSut = () => throw new ArgumentException("cause");
+        var newSyntax2 = await Assert.ThrowsExactlyAsync<ArgumentException>(asyncSut);
+        Assert.AreEqual("cause", newSyntax2.Message);
+    }
+
+    [TestMethod]
+    public async Task ExceptionsDerived()
+    {
+        Action sut = () => throw new ArgumentException("cause");
+        var ex = Assert.Throws<Exception>(sut);
+        Assert.IsInstanceOfType<ArgumentException>(ex);
+
+        Func<Task> asyncSut = () => throw new ArgumentException("cause");
+        var ex2 = await Assert.ThrowsAsync<Exception>(asyncSut);
+        Assert.IsInstanceOfType<ArgumentException>(ex2);
     }
 
     [TestMethod]

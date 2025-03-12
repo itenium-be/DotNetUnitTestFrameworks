@@ -35,14 +35,30 @@ public class NUnitAssertions
     }
 
     [Test]
-    public void Exceptions()
+    public void ExceptionsExact()
     {
-        Action sut = () => throw new Exception("cause");
-        var ex = Assert.Throws<Exception>(() => sut(), "failure message");
+        Action sut = () => throw new ArgumentException("cause");
+        var ex = Assert.Throws<ArgumentException>(() => sut(), "failure message");
         Assert.That(ex.Message, Is.EqualTo("cause"));
 
-        Func<Task> asyncSut = () => Task.CompletedTask;
-        Assert.DoesNotThrowAsync(() => asyncSut());
+        Func<Task> cleanAsyncSut = () => Task.CompletedTask;
+        Assert.DoesNotThrowAsync(() => cleanAsyncSut());
+
+        Func<Task> asyncSut = () => throw new ArgumentException("cause");
+        var ex2 = Assert.ThrowsAsync<ArgumentException>(() => asyncSut());
+        Assert.That(ex2.Message, Is.EqualTo("cause"));
+    }
+
+    [Test]
+    public void ExceptionsDerived()
+    {
+        Action sut = () => throw new ArgumentException("cause");
+        var ex = Assert.Catch<Exception>(() => sut(), "failure message");
+        Assert.That(ex, Is.TypeOf<ArgumentException>());
+
+        Func<Task> asyncSut = () => throw new ArgumentException("cause");
+        var ex2 = Assert.CatchAsync<Exception>(() => asyncSut());
+        Assert.That(ex2, Is.TypeOf<ArgumentException>());
     }
 
     [Test]
