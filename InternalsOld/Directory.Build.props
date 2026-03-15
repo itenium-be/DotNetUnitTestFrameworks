@@ -1,0 +1,10 @@
+<Project>
+  <!-- Override root Directory.Build.props for .NET Framework project -->
+  <PropertyGroup>
+    <TargetFramework></TargetFramework>
+    <ImplicitUsings></ImplicitUsings>
+    <Nullable></Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn></NoWarn>
+  </PropertyGroup>
+</Project>
