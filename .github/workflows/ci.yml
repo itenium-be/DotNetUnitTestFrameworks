@@ -24,5 +24,11 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
 
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
+      - name: Test (VSTest)
+        run: |
+          dotnet test MSTest/MSTest.csproj --no-build --verbosity normal
+          dotnet test NUnit/NUnitTests.csproj --no-build --verbosity normal
+          dotnet test XUnitTests/XUnitTests.csproj --no-build --verbosity normal
+
+      - name: Test (TUnit)
+        run: dotnet run --project TUnitTests/TUnitTests.csproj --no-build

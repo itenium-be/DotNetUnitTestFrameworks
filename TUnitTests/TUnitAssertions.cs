@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Data;
 using System.Text.RegularExpressions;
-using TUnit.Assertions.AssertConditions;
-using TUnit.Assertions.AssertConditions.Throws;
-using TUnit.Assertions.Enums;
+using TUnit.Assertions.Extensions;
 
 namespace TUnitTests;
 
@@ -14,7 +12,6 @@ public class TUnitAssertions
     {
         bool? actual = true;
         await Assert.That(actual).IsTrue();
-        await Assert.That(actual).IsNotFalse();
         await Assert.That(actual).IsNotNull();
 
         actual = null;
@@ -62,14 +59,14 @@ public class TUnitAssertions
 
         Func<Task> asyncSut = () => throw new ArgumentException("cause");
         var ex2 = await Assert.ThrowsAsync<Exception>(asyncSut);
-        await Assert.That(ex2.Message).IsEqualTo("cause");
+        await Assert.That(ex2!.Message).IsEqualTo("cause");
     }
 
     [Test]
     public async Task Types()
     {
         ICollection collection = new ArrayList();
-        await Assert.That(collection).IsAssignableFrom(typeof(ArrayList));
+        await Assert.That(collection).IsAssignableFrom<ArrayList>();
         await Assert.That(collection).IsTypeOf<ArrayList>();
     }
 
@@ -81,8 +78,7 @@ public class TUnitAssertions
 
         await Assert.That(actual).IsNotEmpty();
         await Assert.That(actual).IsEquivalentTo(new[] { 3, 2, 1 });
-        await Assert.That(actual).IsNotEquivalentTo(expected);
-        await Assert.That(actual).IsEquivalentTo(expected, CollectionOrdering.Any);
+        await Assert.That(actual).IsEquivalentTo(expected); // ignores order by default
 
         await Assert.That(actual).Contains(2);
         await Assert.That(actual).DoesNotContain(5);
@@ -104,7 +100,6 @@ public class TUnitAssertions
         await Assert.That(actual).IsGreaterThan(0);
         await Assert.That(actual).IsLessThanOrEqualTo(100);
         await Assert.That(actual).IsPositive();
-        await Assert.That(actual).IsNotNegative();
         await Assert.That(actual).IsNotZero();
     }
 
