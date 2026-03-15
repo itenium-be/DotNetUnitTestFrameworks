@@ -128,6 +128,12 @@ public class NUnitAssertions
 
         // Is.LessThanOrEqualTo
         // Is.Negative/Positive, Is.Zero, Is.AtLeast/AtMost
+
+        // NUnit 4.4+: Integer assertions
+        Assert.That(actual, Is.Even);
+        Assert.That(43, Is.Odd);
+        Assert.That(actual, Is.MultipleOf(7));  // 42 = 6 * 7
+        Assert.That(actual, Is.MultipleOf(21)); // 42 = 2 * 21
     }
 
     [Test]
