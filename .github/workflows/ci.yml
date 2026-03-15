@@ -28,7 +28,9 @@ jobs:
         run: |
           dotnet test MSTest/MSTest.csproj --no-build --verbosity normal
           dotnet test NUnit/NUnitTests.csproj --no-build --verbosity normal
-          dotnet test XUnitTests/XUnitTests.csproj --no-build --verbosity normal
+
+      - name: Test (xUnit v3)
+        run: dotnet run --project XUnitTests/XUnitTests.csproj --no-build
 
       - name: Test (TUnit)
         run: dotnet run --project TUnitTests/TUnitTests.csproj --no-build
