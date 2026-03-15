@@ -126,4 +126,28 @@ public class XunitAssertions
             () => Assert.NotNull("Hello world")
         );
     }
+
+    // xUnit v3: Dynamic skip at runtime
+    [Fact]
+    public void DynamicSkip()
+    {
+        var isWindows = OperatingSystem.IsWindows();
+        Assert.SkipUnless(isWindows, "Windows only test");
+
+        // Also available:
+        // Assert.Skip("Always skip with message");
+        // Assert.SkipWhen(condition, "Skip when condition is true");
+    }
+
+    // xUnit v3: Span support for string-like assertions
+    [Fact]
+    public void SpanSupport()
+    {
+        ReadOnlySpan<char> chars = "Hello World".AsSpan();
+        Assert.StartsWith("Hello", chars);
+        Assert.EndsWith("World", chars);
+        Assert.Contains("lo Wo", chars);
+        Assert.Equal("Hello World", chars);
+        Assert.DoesNotContain("xyz", chars);
+    }
 }
