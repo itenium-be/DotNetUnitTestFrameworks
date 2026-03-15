@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Suppress test analyzer warnings for demo code showing assertion features -->
+    <NoWarn>$(NoWarn);NUnit2007;xUnit2007;TUnitAssertions0005</NoWarn>
+  </PropertyGroup>
+</Project>
