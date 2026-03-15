@@ -31,12 +31,14 @@ public class MSTest
     [TestMethod]
     public void Test3()
     {
-        Assert.AreEqual(0, 0);
+        int expected = 0;
+        int actual = 0;
+        Assert.AreEqual(expected, actual);
     }
 
     [TestCleanup]
     public void AfterEachTest() { }
 
-    [ClassCleanup(ClassCleanupBehavior.EndOfClass)]
+    [ClassCleanup] // EndOfClass is now the default in MSTest 4.0
     public static void AfterAllTests() { }
 }

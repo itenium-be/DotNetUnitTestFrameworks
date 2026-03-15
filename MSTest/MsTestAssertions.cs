@@ -40,23 +40,24 @@ public class MsTestAssertions
     }
 
     [TestMethod]
-    [ExpectedException(typeof(Exception))]
-    public void ExceptionsDeprecated()
+    public void ExceptionsExactType()
     {
+        // [ExpectedException] and Assert.ThrowsException were removed in MSTest 4.0
+        // Use Assert.ThrowsExactly instead
         Action sut = () => throw new Exception();
-        sut();
+        Assert.ThrowsExactly<Exception>(sut);
     }
 
     [TestMethod]
-    public async Task ExceptionsAlsoDeprecated()
+    public async Task ExceptionsExactTypeAsync()
     {
         Action sut = () => throw new ArgumentException("cause");
-        var oldSyntax = Assert.ThrowsException<ArgumentException>(sut);
-        Assert.AreEqual("cause", oldSyntax.Message);
+        var ex = Assert.ThrowsExactly<ArgumentException>(sut);
+        Assert.AreEqual("cause", ex.Message);
 
         Func<Task> asyncSut = () => throw new ArgumentException("cause");
-        var oldSyntax2 = await Assert.ThrowsExceptionAsync<ArgumentException>(asyncSut);
-        Assert.AreEqual("cause", oldSyntax2.Message);
+        var ex2 = await Assert.ThrowsExactlyAsync<ArgumentException>(asyncSut);
+        Assert.AreEqual("cause", ex2.Message);
     }
 
     [TestMethod]
