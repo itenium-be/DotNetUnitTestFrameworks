@@ -118,6 +118,13 @@ public class MsTestAssertions
     {
         int actual = 42;
         Assert.IsTrue(actual < 100);
+
+        // MSTest 4.0+: Numeric assertions
+        Assert.IsPositive(actual);
+        Assert.IsNegative(-5);
+        Assert.IsGreaterThan(0, actual);     // actual > 0
+        Assert.IsLessThan(100, actual);      // actual < 100
+        Assert.IsInRange(0, 100, actual);    // 0 <= actual <= 100
     }
 
     [TestMethod]
