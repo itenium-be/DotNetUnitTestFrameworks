@@ -152,8 +152,8 @@ public class NUnitAssertions
         // Is.SamePathOrUnder
 
         Assert.That("/folder1/./junk/../folder2", Is.SubPathOf("/folder1/"));
-        Assert.That(new DirectoryInfo("c:\\temp"), Does.Exist);
-        Assert.That(new DirectoryInfo("c:\\temp"), Is.Not.Empty);
+        Assert.That(new DirectoryInfo(Environment.CurrentDirectory), Does.Exist);
+        Assert.That(new DirectoryInfo(Environment.CurrentDirectory), Is.Not.Empty);
     }
 
     [Test]
