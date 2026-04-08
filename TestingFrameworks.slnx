@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="InternalsOld/InternalsOld.csproj" />
+  <Project Path="InternalsTest/InternalsTest.csproj" />
+  <Project Path="MSTest/MSTest.csproj" />
+  <Project Path="NUnit/NUnitTests.csproj" />
+  <Project Path="TUnitTests/TUnitTests.csproj" />
+  <Project Path="XUnitTests/XUnitTests.csproj" />
+</Solution>
